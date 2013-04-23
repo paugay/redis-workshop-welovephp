@@ -1,110 +1,28 @@
-# Usando Redis como una cache estática
+# Showing latests items (live cache)
 
-Comencemos con algo sencillo, usar Redis como una cache estática.
+We have a web application where we want to display the lastest 20 items created by our users.
 
-__Tarea__: Implementar una cache en Redis (estilo memcached) que permita hacer
-sets, gets, check-if-exists, dels, expirations, etc...
-
-__Avanzado__: Tener cuidado con "Thundering herd".
-
-# Mostrando los últimos items agregados (live cache)
-
-Tenemos una aplicación web donde queremos mostrar los últimos 20 items creados
-por los usuarios.
-
-Queremos mostrar los últimos N items que han sido agregados.
-
-Usualmente se tiene es una consulta como esta:
+We will usually proceed as follows:
 
 	SELECT id, title FROM items ORDER BY ts LIMIT 20
 
-__Tarea__: Crear una "live cache" donde los items vayan siendo agregados a la
-cache mientras vayan siendo creados.
+__Task 1__: Create a "live cache" where the new items that are created are being saved into this new cache.
 
-__Tarea__: Mostrar los últimos N items agregados.
+__Task 2__: Show the latest N created items.
 
-__Tarea__: Limitar la cantidad de items de la lista.
+__Task 3__: Limit the amount of items that we want to store into the list.
 
-__Tarea__: Implementar la eliminación de un item.
-
-__Tarea__: Implementar una estructura que permita tener indizados los items por
-la primera letra del título.
-
-# Contadores
-
-Queremos mantener un contador de las veces que se ha hecho "click" sobre 
-cada item.
-
-Podríamos simplemente agregar una columna más a la tabla de items, pero en casos
-de gran concurrencia, esto no es para nada óptimo. Necesitamos algo más rápido
-que bloquear-leer-incrementar-escribir.
-
-__Tarea__: Crear las estructuras que permitan contar la cantidad de clicks 
-globales, por semana, y por día.
-
-__Tarea__: Mostrar un listado con los items más populares en los últimos 7 días 
-y en las últimas 24 horas.
+__Task 4__: Implement the case where we delete an item from the application.
 
 
-# Favoritos
+# Counters
 
-Tenemos usuarios, queremos que los usuarios puedan mantener un listado de sus
-items favoritos.
+We want to keep a counter with the number of times the users have "clicked" into a particular item.
 
-__Tarea__: Implementar las estructuras necesarias para mantener un listado de
-los items favoritos de cada usuario.
+We could add a new column into our table, but it will not be optimal in cases where we have lots of 
+concurrent users using our application. We need something better in order to "block - read - increment - write".
 
-__Tarea:__: Mostrar un listado de los items favoritos que tienen en común varios
-usuarios.
+__Task 1__: Create the needed structure in order to count the number of clicks globally, per week, per day and per
+hour. 
 
-# Leaderboards (tablas de clasificación)
-
-El ejemplo clásico es la tabla de clasificación de un juego.
-Por ejemplo, hagamos un juego a ver cuales son los usuarios que más items han
-recomendando.
-
-Tened en cuenta que podemos tener varios miles de recomendaciones por minuto
-
-__Tarea__: Mostrar una tabla de clasificación con los mejores 100 usuarios.
-__Tarea__: Mostrar al usuario su rango global actual.
-
-Nota: Estas implementaciones son triviales en Redis, incluso si se tienen
-millones de usuarios y millones de nuevas recomendaciones por minuto.
-
-# Items únicos
-
-Otro ejemplo interesante que es relativamente fácil de implementar con Redis, 
-pero posiblemente muy difícil con otro tipo de bases de datos, es la problemática
-de ver cuántos usuarios únicos visitaron un recurso determinado en una determinada
-cantidad de tiempo. 
-
-Por ejemplo, queremos conocer el número de usuarios únicos, que han accedido a 
-un determinado item.
-
-__Tarea__: Implementar las estructuras necesarias para llevar la estadística de
-cuáles son los usuarios que han (visitado, comprado, recomendado) cierto item en
-las últimos (5 mins, 1 hora, 6 horas, 24 horas, 7 días, etc...)
-
-# Lista circular
-
-Su super sistema de predicciones ha determinado cuales son los items que más le
-pueden interesar a cierto usuario. Queremos mostar al usuario esos items, de uno
-en uno (de tal forma que no sea agobiante para el usuario).
-
-__Tarea__: Implementar estructura que permita mostar un banner rotativo con items
-recomendados, un item a la vez.
-
-# Lua scripts
-
-Queremos con un solo comando de redis, obtener un listado de items favoritos de
-un usuario, conjuntamente con la cantidad de usuarios que lo han vistidado en los
-últimos 5 mins.
-
-__Tarea__: Implementar usando Lua script.
-
-
-# Optimizando conexiones con pipelines.
-
-__Tarea__: Analizar en los ejercicios anteriores, dónde pueden usarse pipeline para
- optimizar las conexiones a Redis.
-
+__Task 2__: Show a list of the popular items in the last hour, day and week.
