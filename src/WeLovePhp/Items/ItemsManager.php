@@ -1,6 +1,5 @@
 <?php
 
-
 namespace WeLovePhp\Items;
 
 use Doctrine\DBAL\Connection;
@@ -45,6 +44,4 @@ class ItemsManager
     {
         return $this->connection->executeQuery('SELECT * FROM items ORDER BY ts DESC LIMIT 0, ' . $n)->fetchAll();
     }
-
-
 }

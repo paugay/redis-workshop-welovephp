@@ -1,12 +1,12 @@
 info
 
 
-set event:name WeLovePHP
-set event:date 2013-04-13
-get event:name
-get event:date
-del event:name
-del event:date
+set key value
+set date 2013-04-13
+get key
+get date
+del key
+del date
 
 
 incr attendees
@@ -28,7 +28,7 @@ setnx event:started 15:00
 
 keys * 
 
-expire event:locked 1
+set event:locked 1
 expire event:locked 10800
 ttl event:locked
 
@@ -92,5 +92,3 @@ hset event venue Softonic
 hgetall event
 
 hget event name
-
-
