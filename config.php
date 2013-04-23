@@ -1,9 +1,9 @@
 <?php
 
 $connectionParams = array(
-    'dbname' => 'welovephp',
-    'user' => 'root',
-    'password' => 'ok123',
-    'host' => 'localhost',
-    'driver' => 'pdo_mysql',
+    'dbname'   => 'database-name',
+    'user'     => 'database-user',
+    'password' => 'database-password',
+    'host'     => 'database-host',
+    'driver'   => 'pdo_mysql',
 );
