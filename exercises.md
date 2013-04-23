@@ -1,3 +1,21 @@
+# Configuration
+
+1. Install Redis (4 easy steps): http://redis.io/download
+
+2. Checkout the repository
+
+    git clone git@github.com:paugay/redis-workshop-welovephp.git
+
+3. Install composer and run it: 
+
+    curl -sS https://getcomposer.org/installer | php
+    composer.phar install
+
+4. Configure your database
+
+    # edit config.php with your mysql settings
+    mysql dbname < items.sql
+
 # Showing latests items (live cache)
 
 We have a web application where we want to display the lastest 20 items created by our users.
