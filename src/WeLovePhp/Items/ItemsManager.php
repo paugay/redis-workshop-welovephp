@@ -29,19 +29,25 @@ class ItemsManager
 
         $id = $this->connection->lastInsertId();
 
+        $this->redis->lpush("items", $id);
+        $this->redis->ltrim("items", 0, 10);
+
         return $id;
     }
 
     public function getItems($ids)
     {
-        return $this->connection->executeQuery('SELECT * FROM items WHERE id IN (?)',
+        $items = $this->connection->executeQuery('SELECT * FROM items WHERE id IN (?)',
             array($ids),
             array(\Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
         )->fetchAll();
+
+        return array_reverse($items);
     }
 
     public function getLatestItems($n)
     {
-        return $this->connection->executeQuery('SELECT * FROM items ORDER BY ts DESC LIMIT 0, ' . $n)->fetchAll();
+        $ids =  $this->redis->lrange("items", 0, $n - 1);
+        return $this->getItems($ids);
     }
 }
