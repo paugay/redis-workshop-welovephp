@@ -20,6 +20,11 @@ class ItemsManager
         return $this->connection->executeQuery('SELECT * FROM items WHERE id = :id', array('id' => $id))->fetch(\PDO::FETCH_OBJ);
     }
 
+    public function loadByTitle($title)
+    {
+        return $this->connection->executeQuery('SELECT * FROM items WHERE title = :title', array('title' => $title))->fetch(\PDO::FETCH_OBJ);
+    }
+
     public function create($title)
     {
         $this->connection->executeQuery('INSERT INTO items (title, ts) VALUES (:title, :ts)', array(
@@ -33,6 +38,15 @@ class ItemsManager
         $this->redis->ltrim("items", 0, 10);
 
         return $id;
+    }
+
+    public function delete($title)
+    {
+        $item = $this->loadByTitle($title);
+
+        $this->redis->lrem("items", 0, $item->id);
+
+        $this->connection->delete('items', array('id' => $item->id));
     }
 
     public function getItems($ids)

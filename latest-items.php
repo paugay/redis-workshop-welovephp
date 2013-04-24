@@ -22,6 +22,8 @@ try {
     $manager->create('Item num. 5');
     $manager->create('Item num. 6');
 
+    $manager->delete('Item num. 5');
+
     $items = $manager->getLatestItems($n);
 
     print_r($items);
