@@ -1,20 +1,25 @@
 # Configuration
 
-1. Install Redis (4 easy steps): http://redis.io/download
+1. Install Redis in 4 easy steps (from http://redis.io/download):
+
+		wget http://redis.googlecode.com/files/redis-2.6.12.tar.gz
+		tar xzf redis-2.6.12.tar.gz
+		cd redis-2.6.12
+		make
 
 2. Checkout the repository
 
-    git clone git@github.com:paugay/redis-workshop-welovephp.git
+        git clone git@github.com:paugay/redis-workshop-welovephp.git
 
 3. Install composer and run it: 
 
-    curl -sS https://getcomposer.org/installer | php
-    composer.phar install
+		curl -sS https://getcomposer.org/installer | php
+		composer.phar install
 
-4. Configure your database
+4. Edit _config.php_ with your mysql settings
+5. Load the given _items.sql_ schema:
 
-    # edit config.php with your mysql settings
-    mysql dbname < items.sql
+		mysql dbname < items.sql
 
 # Showing latests items (live cache)
 
