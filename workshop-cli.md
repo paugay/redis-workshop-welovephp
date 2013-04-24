@@ -6,8 +6,8 @@ know the exact key used to store it.
 
 We can use the command SET to store the value:
 
-	set event:name WeLovePHP
-	get event:name
+	set key value
+	get key
 
 Redis will store our data permanently, so we can later ask "What is the value
 stored at the given key?".
@@ -22,13 +22,12 @@ already exist.
 
 INCR to atomically increment a number stored at a given key:
 
-	set attendees 0
-	incr attendees
-	incr attendees
-	incr attendees 5
-	incrby attendees 5
-	del attendees
-	incr attendees
+	set clicks 0
+	incr clicks
+	incr clicks
+	incrby clicks 5
+	del clicks
+	incr clicks
 
 There is something special about INCR. 
 Why do we provide such an operation if we can do it ourself with a bit of code? 
@@ -89,7 +88,6 @@ RPUSH puts the new value at the end of the list:
 	rpush users javier
 	rpush users manu
 	lpsuh users gonzalo
-
 
 LPUSH puts the new value at the start of the list.
 
@@ -186,7 +184,7 @@ SUNION combines two or more sets and returns the list of all elements:
 	sadd commands awk
 
 
-	SUNION commands superpowers
+	sunion commands superpowers
 	1) "emacs"
 	2) "ps"
 	3) "pwd"
@@ -209,24 +207,24 @@ The last data structure which Redis supports is the sorted set.  It is similar
 to a regular set, but now each value has an associated score.  This score is
 used to *sort* the elements in the set:
 
-	ZADD hackers 1940 "Alan Kay"
-	ZADD hackers 1953 "Richard Stallman"
-	ZADD hackers 1965 "Yukihiro Matsumoto"
-	ZADD hackers 1916 "Claude Shannon"
-	ZADD hackers 1969 "Linus Torvalds"
-	ZADD hackers 1912 "Alan Turing"
+	zadd hackers 1940 "Alan Kay"
+	zadd hackers 1953 "Richard Stallman"
+	zadd hackers 1965 "Yukihiro Matsumoto"
+	zadd hackers 1916 "Claude Shannon"
+	zadd hackers 1969 "Linus Torvalds"
+	zadd hackers 1912 "Alan Turing"
 
 In these examples, the scores are years of birth and the values are the names
 of famous hackers:
 
-	ZRANGE hackers 2 4
+	zrange hackers 2 4
 	1) "Alan Kay"
 	2) "Richard Stallman"
 	3) "Yukihiro Matsumoto"
 
 Sorted sets scores can be updated at any time. Just calling again ZADD against
- an element already included in the sorted set will update its score (and position) 
- in O(log(N)), so sorted sets are suitable even when there are tons of updates.
+an element already included in the sorted set will update its score (and position) 
+in O(log(N)), so sorted sets are suitable even when there are tons of updates.
 
 
 # Hashes
@@ -237,23 +235,23 @@ name, surname, age, and so forth):
 
 For example, for the above event example, we should have:
 
-	hset event name WeLovePHP
-	hset event date 2013-04-13
-	hset event duration 3
-	hset event venue Softonic
+	hset event name hackathon
+	hset event date 2013-04-25
+	hset event start "10am"
+	hset event venue "VisualDNA offices"
 
 	hgetall event
-	1) "name"
-	2) "WeLovePHP"
-	3) "date"
-	4) "2013-04-13"
-	5) "duration"
-	6) "3"
-	7) "venue"
-	8) "Softonic"
+    1) "name"
+    2) "hackathon"
+    3) "date"
+    4) "2013-04-25"
+    5) "start"
+    6) "10am"
+    7) "venue"
+    8) "VisualDNA offices"
 
 	hget event name 
-	"WeLovePHP"
+	"hackathon"
 
 A hash with a few fields (where few means up to one hundred or so) is stored in 
 a way that takes very little space, so you can store millions of objects in a 
@@ -263,4 +261,3 @@ While Hashes are used mainly to represent objects, they are capable of storing
 many elements, so you can use Hashes for many other tasks as well.
 
 Every hash can store up to 2^32-1 field-value pairs (more than 4 billion).
-
