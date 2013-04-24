@@ -13,7 +13,7 @@ try {
 
     $manager = new ItemsManager($conn, $redis);
 
-    $manager->create('we love php');
+    $manager->create('Item num. 1');
 
     $items = $manager->getLatestItems(4);
     print_r($items);
