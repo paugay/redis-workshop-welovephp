@@ -30,13 +30,11 @@ We will usually proceed as follows:
 	SELECT id, title FROM items ORDER BY ts LIMIT 20
 
 __Task 1__: Create a "live cache" where the new items that are created are being saved into this new cache.
+Show the latest N created items and limit the amount of items that we want to store into the list.
 
-__Task 2__: Show the latest N created items.
+__Task 2__: Implement the case where we delete an item from the application.
 
-__Task 3__: Limit the amount of items that we want to store into the list.
-
-__Task 4__: Implement the case where we delete an item from the application.
-
+__Task 3__: Can you think in any other improvement?
 
 # Counters
 
