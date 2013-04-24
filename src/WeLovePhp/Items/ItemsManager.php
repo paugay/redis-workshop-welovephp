@@ -3,16 +3,19 @@
 namespace WeLovePhp\Items;
 
 use Doctrine\DBAL\Connection;
+use WeLovePhp\Items\ClickCounter;
 
 class ItemsManager
 {
     protected $connection;
     protected $redis;
+    protected $clickCounter;
 
-    public function __construct(Connection $conn, $redis)
+    public function __construct(Connection $conn, $redis, ClickCounter $clickCounter)
     {
         $this->connection = $conn;
         $this->redis = $redis;
+        $this->clickCounter = $clickCounter;
     }
 
     public function load($id)
@@ -37,7 +40,7 @@ class ItemsManager
         $this->redis->lpush("items", json_encode($item));
         $this->redis->ltrim("items", 0, 10);
 
-        return $id;
+        return $item->id;
     }
 
     public function delete($title)
@@ -47,6 +50,11 @@ class ItemsManager
         $this->redis->lrem("items", 0, json_encode($item));
 
         $this->connection->delete('items', array('id' => $item->id));
+    }
+
+    public function deleteAll()
+    {
+        $this->connection->delete('items', array('1' => '1'));
     }
 
     public function getLatestItems($n)
@@ -59,5 +67,18 @@ class ItemsManager
             },
             $items
         );
+    }
+
+    public function getPopularItems($range)
+    {
+        $ids = $this->clickCounter->getPopularItems($range);
+        $items = array();
+
+        foreach ($ids as $id)
+        {
+            $items[] = $this->load($id);
+        }
+
+        return $items;
     }
 }
