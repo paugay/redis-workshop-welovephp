@@ -6,18 +6,22 @@
 		tar xzf redis-2.6.12.tar.gz
 		cd redis-2.6.12
 		make
+		
+2. Start redis (in another terminal):
 
-2. Checkout the repository
+        src/redis-server
+        
+3. Checkout the repository
 
         git clone git@github.com:paugay/redis-workshop-welovephp.git
 
-3. Install composer and run it: 
+4. Install composer and run it: 
 
 		curl -sS https://getcomposer.org/installer | php
 		composer.phar install
 
-4. Edit _config.php_ with your mysql settings
-5. Load the given _items.sql_ schema:
+5. Edit _config.php_ with your mysql settings
+6. Load the given _items.sql_ schema:
 
 		mysql dbname < items.sql
 
