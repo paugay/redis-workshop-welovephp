@@ -58,7 +58,7 @@ types of data.
 Redis can be told that a key should only exist for a certain length of time.
 This is accomplished with the EXPIRE and TTL commands:
 
-	expire event:locked 1
+	set event:locked 1
 	expire event:locked 10800
 	ttl event:locked
 
