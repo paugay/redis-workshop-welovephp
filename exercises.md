@@ -13,12 +13,12 @@
         
 3. Checkout the repository
 
-        git clone git@github.com:paugay/redis-workshop-welovephp.git
+        git clone git://github.com/paugay/redis-workshop-welovephp.git
 
 4. Install composer and run it: 
 
 		curl -sS https://getcomposer.org/installer | php
-		composer.phar install
+		./composer.phar install
 
 5. Edit _config.php_ with your mysql settings
 6. Load the given _items.sql_ schema:
