@@ -11,7 +11,7 @@
 
         src/redis-server
         
-3. Checkout the repository
+3. Checkout the "read only" repository
 
         git clone git://github.com/paugay/redis-workshop-welovephp.git
 
